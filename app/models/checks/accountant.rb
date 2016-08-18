@@ -1,0 +1,3 @@
+class Accountant < Check
+
+end

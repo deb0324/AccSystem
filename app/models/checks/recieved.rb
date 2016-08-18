@@ -1,0 +1,3 @@
+class Recieved < Check
+
+end

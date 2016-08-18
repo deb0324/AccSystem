@@ -1,0 +1,11 @@
+<p>
+<%= link_to "1~2月營業稅", session_path(current_user, year: year, type: "VatJan") %>
+<%= link_to "3~4月營業稅", session_path(current_user, year: year, type: "VatMar") %>
+<%= link_to "5~6月營業稅", session_path(current_user, year: year, type: "VatMay") %>
+<%= link_to "7~8月營業稅", session_path(current_user, year: year, type: "VatJul") %>
+<%= link_to "9~10月營業稅", session_path(current_user, year: year, type: "VatSep") %>
+<%= link_to "11~12月營業稅", session_path(current_user, year: year, type: "VatNov") %>
+<%= link_to "扣繳憑單申報", session_path(current_user, year: year, type: "Voucher") %>
+<%= link_to "結算申報", session_path(current_user, year: year, type: "IncomeTax") %>
+<br>
+</p>

@@ -1,0 +1,16 @@
+<%= render 'shared/title', title: '新增員工' %>
+
+<div>
+  <%= form_for @user do |f| %>
+    <label>代號</label>
+    <p><%= f.text_field :code %></p>
+
+    <label>姓名</label>
+    <p><%= f.text_field :name %></p>
+
+    <label>密碼</label>
+    <p><%= f.password_field :password %></p>
+
+    <%= f.submit '新增' %>
+  <% end %>
+</div>

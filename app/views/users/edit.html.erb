@@ -1,0 +1,17 @@
+<%= render 'shared/title', title: '修改員工' %>
+<p><%= link_to '刪除', user_path(@user), method: 'delete', :data => {:confirm => '確定？'} %></p>
+
+<div>
+  <%= form_for @user do |f| %>
+    <label>代號</label>
+    <p><%= f.text_field :code %></p>
+
+    <label>姓名</label>
+    <p><%= f.text_field :name %></p>
+
+    <label>密碼</label>
+    <p><%= f.password_field :password %></p>
+
+    <%= f.submit '修改' %>
+  <% end %>
+</div>

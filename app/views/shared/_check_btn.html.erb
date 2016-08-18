@@ -1,0 +1,15 @@
+<td>
+  <!-- if flag is false -->
+  <% if !(task.checks.where(type: type).first.flag) %> 
+    <% if current_user.permission?(task, task.checks.where(type: type).first) && current_user.completed?(task, task.checks.where(type: type).first) %>
+      <%= link_to check_task_path(task, type: type, flag: true), class: "empty_btn", :data => {:confirm => '確定？'}, method: 'post' do%>
+      <% end %>
+    <% end %>
+  <% else %>
+    <% if current_user.permission?(task, task.checks.where(type: type).first) %>
+      <%= link_to check_task_path(task, type: type, flag: false), :data => {:confirm => '確定？'}, method: 'post' do%><small><%= task.checks.where(type: type).first.updated_at.strftime("%b %d, %Y") %></small> <% end %>
+    <% else %>
+     <small><%= task.checks.where(type: type).first.updated_at.strftime("%b %d, %Y") %></small>
+    <% end %>
+  <% end %>
+</td>

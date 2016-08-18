@@ -1,0 +1,21 @@
+<%= render 'shared/title', title: '修改客戶' %>
+
+<p><%= link_to '刪除', customer_path(@customer), method: 'delete', :data => {:confirm => '確定？'} %></p>
+
+<div>
+  <%= form_for @customer do |f| %>
+    <p>客戶名稱</p>
+    <p><%= f.text_field :name %></p>
+
+    <p>承辦人</p>
+    <p><%= f.select :officer_id, options_for_select(@users, User.find(@customer.officer_id).name)%></p>
+
+    <p>領組</p>
+    <p><%= f.select :leader_id, options_for_select(@users, User.find(@customer.leader_id).name) %></p>
+
+    <p>經理</p>
+    <p><%= f.select :manager_id, options_for_select(@users, User.find(@customer.manager_id).name) %></p>
+    
+    <p><%= f.submit '修改' %></p>
+  <% end %>
+</div>

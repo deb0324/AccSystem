@@ -1,0 +1,3 @@
+class VatMay < Task
+
+end

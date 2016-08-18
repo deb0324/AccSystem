@@ -1,0 +1,3 @@
+class Secondary < Check
+
+end

@@ -1,0 +1,9 @@
+<td>
+  <% if current_user.name == name %>
+    <span style="color: red;">
+      <%= name %>
+    </span>
+  <% else %>
+    <%= name %>
+  <% end %>
+</td>

@@ -1,0 +1,3 @@
+class Primary < Check
+
+end

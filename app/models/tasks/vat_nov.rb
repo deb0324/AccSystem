@@ -1,0 +1,3 @@
+class VatNov < Task
+
+end

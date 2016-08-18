@@ -1,0 +1,11 @@
+<%= render 'shared/title', title: '選擇客戶' %>
+
+<div>
+  <%= form_for(:choice, url: choose_customer_path) do |f| %>
+
+    <label>姓名:</label>
+    <p><%= f.select :name, options_for_select(@customers) %></p>
+
+    <%= f.submit '確定' %>
+  <% end %>
+</div>

@@ -1,0 +1,3 @@
+class VatSep < Task
+
+end

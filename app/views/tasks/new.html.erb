@@ -1,0 +1,11 @@
+<%= render 'shared/title', title: '新增年度tasks' %>
+
+<div>
+  <%= form_for @task do |f| %>
+
+    <p>操作年度:</p>
+    <p><%= f.select :year, options_for_select(@year_options)  %></p>
+
+    <%= f.submit "確認" %>
+  <% end %>
+</div>

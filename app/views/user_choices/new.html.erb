@@ -1,0 +1,11 @@
+<%= render 'shared/title', title: '選擇員工' %>
+
+<div>
+  <%= form_for(:session, url: choose_user_path) do |f| %>
+    <%= render 'shared/form_errors', object: @user %>
+    <label>姓名:</label>
+    <p><%= f.select :name, options_for_select(@users) %></p>
+
+    <%= f.submit '確定' %>
+  <% end %>
+</div>

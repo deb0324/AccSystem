@@ -1,0 +1,3 @@
+class IncomeTax < Task
+
+end
