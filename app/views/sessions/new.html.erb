@@ -9,7 +9,7 @@
     <p><%= f.select :type, options_for_select(@type_options) %></p>
 
     <p>操作年度:</p>
-    <p><%= f.select :year, options_for_select(@year_options)  %></p>
+    <p><%= f.select :year, options_for_select(@year_options, current_year)  %></p>
 
     <p>密碼:</p>
     <p><%= f.password_field :password %></p>

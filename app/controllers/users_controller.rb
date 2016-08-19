@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @user = User.create(user_params)
 
     if @user.save
+      flash[:success] = "員工:#{@user.name} 新增成功"
       redirect_to root_path
     else
       render :new
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.update(user_params)
+      flash[:success] = "員工:#{@user.name} 修改成功"
       redirect_to root_path
     else
       render :edit
@@ -35,8 +37,10 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    flash[:success] = "員工刪除成功"
     @user.destroy
 
+    
     redirect_to root_path
   end
 

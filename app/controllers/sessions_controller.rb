@@ -34,10 +34,14 @@ class SessionsController < ApplicationController
     @year = params[:year]
     @query = "#{@user.name} > #{params[:year]}年 > #{task_e2c(params[:type])}"
     @raw_type = params[:type] 
-
+    @tasks = []
     # If user is accountant, display all tasks, else display only involved tasks
     if current_user.accountant?
-      @tasks = Task.where(year: params[:year], type: params[:type])
+      customers = Customer.where(status: "current")
+      customers.each do |customer|
+        @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
+      end
+     
     else
       customers = is_responsible(params[:id])
       @tasks = []
@@ -46,10 +50,16 @@ class SessionsController < ApplicationController
       end
     end
 
+    # if !(params[:flag])
+    #  @tasks = @tasks.sort_by{|x| x.total_checks}.reverse
+    # end
+
   end
 
   def destroy
     session[:user_id] = nil
+
+    flash[:success] = '已登出'
     redirect_to root_path
   end
 
@@ -57,7 +67,7 @@ class SessionsController < ApplicationController
 
   # Get all the customers that the user is involved in
   def is_responsible(id)
-    Customer.where(officer_id: id) + Customer.where(manager_id: id) + Customer.where(leader_id: id)
+    Customer.where(officer_id: id, status: "current") + Customer.where(manager_id: id, status: "current") + Customer.where(leader_id: id, status: "current")
   end
 
   # Convert task name from Chin to Eng

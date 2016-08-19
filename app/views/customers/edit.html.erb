@@ -15,6 +15,9 @@
 
     <p>經理</p>
     <p><%= f.select :manager_id, options_for_select(@users, User.find(@customer.manager_id).name) %></p>
+
+    <p>狀態</p>
+    <p><%= f.select :status, options_for_select(@status, @curr_status) %></p>
     
     <p><%= f.submit '修改' %></p>
   <% end %>

@@ -3,11 +3,16 @@ class TasksController < ApplicationController
   before_action :require_user, only:[:check, :new, :create]
   def check
     @task = Task.find(params[:id])
+    @type = params[:type]
     check = @task.checks.where(type: params[:type]).first
     check.flag = params[:flag]
 
     if check.save
-      redirect_to :back
+      # respond_to do |format|
+      #   format.html { redirect_to session_path(current_user, year: @task.year, type: @task.type)} 
+      #   format.js
+      # end
+      redirect_to session_path(current_user, year: @task.year, type: @task.type)
     end
   end
 

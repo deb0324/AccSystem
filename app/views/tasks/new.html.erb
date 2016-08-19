@@ -4,7 +4,7 @@
   <%= form_for @task do |f| %>
 
     <p>操作年度:</p>
-    <p><%= f.select :year, options_for_select(@year_options)  %></p>
+    <p><%= f.select :year, options_for_select(@year_options, current_year)  %></p>
 
     <%= f.submit "確認" %>
   <% end %>

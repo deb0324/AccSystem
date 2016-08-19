@@ -1,0 +1,11 @@
+$('#<%= @task.checks.where(type: @type).first.id %>').html("Likes");
+
+<% if !(@task.checks.where(type: @type).first.flag) %> 
+  
+    $('#<%= @task.checks.where(type: @type).first.id %>').html("<%= link_to check_task_path(@task, type: @type, flag: true), class: 'empty_btn', :data => {:confirm => '確定？'}, method: 'post' do%><% end %>");
+ 
+<% else %>
+
+    $('#<%= @task.checks.where(type: @type).first.id %>').html("<%= link_to check_task_path(@task, type: @type, flag: false), :data => {:confirm => '確定？'}, method: 'post' do%><small><%= @task.checks.where(type: @type).first.updated_at.strftime('%b %d, %Y') %></small> <% end %>");
+  
+<% end %>

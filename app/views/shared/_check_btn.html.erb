@@ -1,4 +1,4 @@
-<td>
+<td id="<%= task.checks.where(type: type).first.id %>">
   <!-- if flag is false -->
   <% if !(task.checks.where(type: type).first.flag) %> 
     <% if current_user.permission?(task, task.checks.where(type: type).first) && current_user.completed?(task, task.checks.where(type: type).first) %>
