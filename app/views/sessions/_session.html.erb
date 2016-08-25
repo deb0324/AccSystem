@@ -1,0 +1,40 @@
+<table id="session">
+  <tr>
+    <th>承辦人</th>
+    <th>領組</th>
+    <th>經理</th>
+    <th>客戶代號</th>
+    <th>客戶簡稱</th>
+    <th>收件完成</th>
+    <th>初稿完成</th>
+    <th>複核完成</th>
+    
+    <% if raw_type == "IncomeTax" %>
+      <th>會計師復核</th>
+    <% end %>
+    
+    <th>上傳完成</th>
+  </tr>
+
+  <% tasks.each do |task| %>
+
+    <tr>
+      <%= render 'shared/name', name: Customer.find(task.customer_id).officer.name %>
+      <%= render 'shared/name', name: Customer.find(task.customer_id).leader.name %>
+      <%= render 'shared/name', name: Customer.find(task.customer_id).manager.name %>
+      <td><%= link_to Customer.find(task.customer_id).code, customer_path(Customer.find(task.customer_id)) %></td>
+      <td><%= Customer.find(task.customer_id).name_abrev %></td>
+      <%= render 'shared/check_btn', task: task, type: "Recieved" %>
+      <%= render 'shared/check_btn', task: task, type: "Primary" %>
+      <%= render 'shared/check_btn', task: task, type: "Secondary" %>
+      
+      <% if raw_type == "IncomeTax" %>
+        <%= render 'shared/check_btn', task: task, type: "Accountant" %>
+      <% end %>
+      
+      <%= render 'shared/check_btn', task: task, type: "Upload" %>
+      
+    </tr>
+
+  <% end %>
+</table>

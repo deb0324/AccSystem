@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   end
 
   def permission?(task, check)
-    if self.id == Customer.find(task.customer_id).officer_id 
+    if self.id == Customer.find(task.customer_id).officer_id && !(self.id == Customer.find(task.customer_id).leader_id || self.id == Customer.find(task.customer_id).manager_id)
       (check.type == "Recieved" || check.type == "Primary")
     else
       if check.type == "Accountant"

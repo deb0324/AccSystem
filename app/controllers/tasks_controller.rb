@@ -8,10 +8,6 @@ class TasksController < ApplicationController
     check.flag = params[:flag]
 
     if check.save
-      # respond_to do |format|
-      #   format.html { redirect_to session_path(current_user, year: @task.year, type: @task.type)} 
-      #   format.js
-      # end
       redirect_to session_path(current_user, year: @task.year, type: @task.type)
     end
   end
@@ -38,7 +34,7 @@ class TasksController < ApplicationController
       customer.save!
     end
 
-    redirect_to root_path
+    redirect_to users_path
   end
 
   private

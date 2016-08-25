@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
     @tasks = []
 
     session[:testing] = request.original_url
-    
+
     # If user is accountant, display all tasks, else display only involved tasks
     if current_user.accountant?
       customers = Customer.where(status: "current")
@@ -42,16 +42,34 @@ class SessionsController < ApplicationController
       end
      
     else
-      customers = is_responsible(params[:id])
-      @tasks = []
-      customers.each do |customer|
-        @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
+      types = ["officer", "leader", "manager"]
+      types.each do |type|
+        customers = is_responsible(params[:id], type)
+        @tasks = []
+        customers.each do |customer|
+          @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
+        end
+
+        case type
+        when "officer"
+          @officer_tasks = @tasks
+        when "leader"
+          @leader_tasks = @tasks
+        else
+          @manager_tasks = @tasks
+        end
       end
     end
 
-    # if !(params[:flag])
-    #  @tasks = @tasks.sort_by{|x| x.total_checks}.reverse
-    # end
+    #if (params[:flag])
+      if current_user.accountant?
+        @tasks = @tasks.sort_by{|x| x.total_checks}
+      else
+        @officer_tasks = @officer_tasks.sort_by{|x| x.total_checks}
+        @leader_tasks = @leader_tasks.sort_by{|x| x.total_checks}
+        @manager_tasks = @manager_tasks.sort_by{|x| x.total_checks}
+      end
+    #end
 
   end
 
@@ -65,8 +83,17 @@ class SessionsController < ApplicationController
   private
 
   # Get all the customers that the user is involved in
-  def is_responsible(id)
-    Customer.where(officer_id: id, status: "current") + Customer.where(manager_id: id, status: "current") + Customer.where(leader_id: id, status: "current")
+  def is_responsible(id, type)
+    case type
+    when "officer"
+      Customer.where(officer_id: id, status: "current")
+    when "leader"
+      Customer.where(leader_id: id, status: "current") - Customer.where(officer_id: id, status: "current")
+    when "manager"
+      Customer.where(manager_id: id, status: "current") - Customer.where(leader_id: id, status: "current") - Customer.where(officer_id: id, status: "current")
+    else
+
+    end
   end
 
   # Convert task name from Chin to Eng
