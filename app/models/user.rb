@@ -9,6 +9,14 @@ class User < ActiveRecord::Base
     self.code == "Y01" || self.code == "Y02"
   end
 
+  def closed?
+    self.code == "Z01"
+  end
+
+  def moved?
+    self.code == "Z99"
+  end
+
   def permission?(task, check)
     if self.id == Customer.find(task.customer_id).officer_id && !(self.id == Customer.find(task.customer_id).leader_id || self.id == Customer.find(task.customer_id).manager_id)
       (check.type == "Recieved" || check.type == "Primary")

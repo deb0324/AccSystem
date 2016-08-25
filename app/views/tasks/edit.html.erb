@@ -1,0 +1,10 @@
+<%= render 'shared/title', title: '修改備註' %>
+
+<div>
+  <%= form_for(@task, as: :task, url: {controller: :tasks, action: :update}) do |f| %>
+   <label>備註</label>
+    <p><%= f.text_area :note %></p>
+
+    <%= f.submit '修改備註' %>
+  <% end %>
+</div>

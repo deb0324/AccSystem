@@ -2,7 +2,7 @@
 
 <%= render 'shared/tasks_nav', year: @year %>
 
-<% if current_user.accountant? %>
+<% if current_user.accountant?  || current_user.moved? || current_user.closed? %>
   <%= render 'session', raw_type: @raw_type, tasks: @tasks %><br>
 <% else %>
   <%= render 'session', raw_type: @raw_type, tasks: @officer_tasks %><br>

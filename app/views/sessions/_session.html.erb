@@ -1,8 +1,8 @@
 <table id="session">
   <tr>
-    <th>承辦人</th>
-    <th>領組</th>
     <th>經理</th>
+    <th>領組</th>
+    <th>承辦人</th>
     <th>客戶代號</th>
     <th>客戶簡稱</th>
     <th>收件完成</th>
@@ -14,14 +14,15 @@
     <% end %>
     
     <th>上傳完成</th>
+    <th>備註</th>
   </tr>
 
   <% tasks.each do |task| %>
 
     <tr>
-      <%= render 'shared/name', name: Customer.find(task.customer_id).officer.name %>
-      <%= render 'shared/name', name: Customer.find(task.customer_id).leader.name %>
       <%= render 'shared/name', name: Customer.find(task.customer_id).manager.name %>
+      <%= render 'shared/name', name: Customer.find(task.customer_id).leader.name %>
+      <%= render 'shared/name', name: Customer.find(task.customer_id).officer.name %>
       <td><%= link_to Customer.find(task.customer_id).code, customer_path(Customer.find(task.customer_id)) %></td>
       <td><%= Customer.find(task.customer_id).name_abrev %></td>
       <%= render 'shared/check_btn', task: task, type: "Recieved" %>
@@ -34,6 +35,11 @@
       
       <%= render 'shared/check_btn', task: task, type: "Upload" %>
       
+      <% if task.note.nil? %>
+      <td><%= link_to(edit_task_path(task, task: task.id), class: "empty_btn", confirm: 'test?') do %><% end %></td>
+      <% else %>
+        <td><%= link_to(edit_task_path(task, task: task.id), confirm: 'test?') do %><small><%= auto_link(simple_format(task.note)) %></small><% end %></td>
+      <% end %>
     </tr>
 
   <% end %>

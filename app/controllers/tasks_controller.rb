@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 
-  before_action :require_user, only:[:check, :new, :create]
+  before_action :require_user, only:[:check, :new, :create, :edit, :update]
   def check
     @task = Task.find(params[:id])
     @type = params[:type]
@@ -35,6 +35,22 @@ class TasksController < ApplicationController
     end
 
     redirect_to users_path
+  end
+
+  def edit
+    @task = Task.find(params[:id])
+    
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    @task.note = params[:task][:note]
+
+    if @task.save
+      redirect_to session[:session_url]
+    else
+      render :edit
+    end
   end
 
   private

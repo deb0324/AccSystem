@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   before_action :require_accountant, only:[:index, :new, :create, :edit, :update, :destroy]
   def index
-    @url = session[:testing]
+    @url = session[:session_url]
   end
 
   def new

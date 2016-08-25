@@ -32,15 +32,18 @@ class SessionsController < ApplicationController
     @raw_type = params[:type] 
     @tasks = []
 
-    session[:testing] = request.original_url
+    session[:session_url] = request.original_url
 
     # If user is accountant, display all tasks, else display only involved tasks
     if current_user.accountant?
       customers = Customer.where(status: "current")
-      customers.each do |customer|
-        @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
-      end
-     
+    
+    elsif current_user.moved?
+      customers = Customer.where(status: "moved")
+
+    elsif current_user.closed?
+      customers = Customer.where(status: "closed") 
+
     else
       types = ["officer", "leader", "manager"]
       types.each do |type|
@@ -61,8 +64,12 @@ class SessionsController < ApplicationController
       end
     end
 
+    customers.each do |customer|
+      @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
+    end
+
     #if (params[:flag])
-      if current_user.accountant?
+      if current_user.accountant? || current_user.moved? || current_user.closed?
         @tasks = @tasks.sort_by{|x| x.total_checks}
       else
         @officer_tasks = @officer_tasks.sort_by{|x| x.total_checks}

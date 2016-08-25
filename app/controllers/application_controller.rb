@@ -37,10 +37,6 @@ class ApplicationController < ActionController::Base
     name = "#{user.code} #{user.name}"
   end
 
-  def save_url
-    session[:my_url] = request.env["HTTP_REFERER"]
-  end
-
   def current_task
     case Date.today.strftime("%m-%d")
     when ("03-01".."03-17")
