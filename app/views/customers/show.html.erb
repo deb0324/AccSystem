@@ -1,0 +1,93 @@
+<%= render 'shared/title', title: @customer.name %>
+<p><%= link_to "上一頁", :back %></p>
+<table id="customer_show">
+  <tr>
+    <td>客戶代號:</td>
+    <td><%= @customer.code %></td>
+  </tr>
+
+  <tr>
+    <td>客戶簡稱: </td>
+    <td><%= @customer.name_abrev %></td>  
+  </tr>
+
+  <tr>
+    <td>客戶全名: </td>
+    <td><%= @customer.name %></td>
+  </tr>
+
+  <tr>
+    <td>申報別: </td>
+    <td><%= declare_e2c(@customer.declare_type) %></td>
+  </tr>
+
+  <tr>
+    <td>登記地址: </td>
+    <td><%= @customer.reg_addr %></td>
+  </tr>
+
+  <tr>
+    <td>聯絡地址: </td>
+    <td><%= @customer.contact_addr %></td>
+  </tr>
+
+  <tr>
+    <td>聯絡人: </td>
+    <td><%= @customer.contact %></td>
+  </tr>
+
+  <tr>
+    <td>手機: </td>
+    <td><%= @customer.cellphone %></td>
+  </tr>
+
+  <tr>
+    <td>電話: </td>
+    <td><%= @customer.phone %></td>
+  </tr>
+
+  <tr>
+    <td>傳真: </td>
+    <td><%= @customer.fax %></td>
+  </tr>
+
+  <tr>
+    <td>信箱: </td>
+    <td><%= @customer.email %></td>
+  </tr>
+
+  <tr>
+    <td>費用:</td>
+    <td><%= @customer.fee %></td>
+  </tr>
+
+  <tr>
+    <td>承辦人: </td>
+    <td><%= User.find(@customer.officer_id).name %></td>
+  </tr>
+
+  <tr>
+    <td>領組: </td>
+    <td><%= User.find(@customer.leader_id).name %></td>
+  </tr>
+
+  <tr>
+    <td>經理:</td>
+    <td><%= User.find(@customer.manager_id).name %></td>
+  </tr>
+
+  <tr>
+    <td>起始年約: </td>
+    <td><%= @customer.start_date %></td>
+  </tr>
+
+  <tr>
+    <td>備註1: </td>
+    <td><%= auto_link(simple_format(@customer.note_1)) %></td>
+  </tr>
+
+  <tr>
+    <td>備註2: </td>
+    <td><%= auto_link(simple_format(@customer.note_2)) %></td>
+  </tr>
+  </table>

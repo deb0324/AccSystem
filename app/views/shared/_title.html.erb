@@ -1,8 +1,7 @@
 <h1><%= title %></h1>
 <hr>
 
-<%= link_to '首頁', root_path %>
-<%= link_to '案件管制系統', new_session_path %>
+
 
 <% if current_user %>
   <% if current_user.accountant? %>
@@ -10,4 +9,6 @@
   <% end %>
   <%= link_to "登出", logout_path %>
 <% end %>
+
+
 <%= render 'shared/messages' %>

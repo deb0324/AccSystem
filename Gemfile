@@ -4,7 +4,8 @@ gem 'bcrypt'
 
 gem 'awesome_print'
 
-
+# for links
+gem "rails_autolink"
 
 gem 'bootstrap-sass'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

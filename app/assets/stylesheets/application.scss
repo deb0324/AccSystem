@@ -26,20 +26,40 @@ body {
   margin: 0px auto;
 }
 
-table, th, td {
-   border: 1px solid black;
-}
 
-table {
+
+table#session {
   width: 100%;
 
+  th, td {
+    border: 1px solid black;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+  }
+
 }
 
-th, td{
-  height: 30px;
-  padding: 5px;
-  text-align: center;
+
+table#customer_new{
+  width: 50%;
+
+  td {
+    text-align: left;
+    height: 30px;
+  }
 }
+
+table#customer_show{
+  width: 50%;
+
+  td {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    height: 30px;
+  }
+}
+
 
 .empty_btn{
   display: inline-block;
@@ -72,3 +92,9 @@ th, td{
     color: #fff;
   }
 }
+
+@media print {
+  a[href]:after {
+    content: none !important; 
+  }
+} 

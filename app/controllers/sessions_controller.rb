@@ -1,21 +1,17 @@
 class SessionsController < ApplicationController
 
   before_action :require_user, only:[:show, :destroy]
-  def index
-
-  end
+  
 
   def new
     @type_options = ['1~2月營業稅','3~4月營業稅','5~6月營業稅','7~8月營業稅','9~10月營業稅','11~12月營業稅','扣繳憑單申報', '結算申報']
     @year_options = ['105', '106', '107', '108', '109', '110']
+    @names = name_array()
   end
 
   def create
-    if params[:session][:name] == ""
-      flash[:error] = "請確定資料都正確(姓名,密碼)"
-    else
-      @user = User.find(params[:session][:name])
-    end
+
+    @user = User.find_by_name(params[:session][:name].split(" ")[1])
 
     type = task_c2e(params[:session][:type])
     year = params[:session][:year].to_i
@@ -35,6 +31,9 @@ class SessionsController < ApplicationController
     @query = "#{@user.name} > #{params[:year]}年 > #{task_e2c(params[:type])}"
     @raw_type = params[:type] 
     @tasks = []
+
+    session[:testing] = request.original_url
+    
     # If user is accountant, display all tasks, else display only involved tasks
     if current_user.accountant?
       customers = Customer.where(status: "current")
@@ -118,6 +117,5 @@ class SessionsController < ApplicationController
     else
       '###'
     end
-      
   end
 end

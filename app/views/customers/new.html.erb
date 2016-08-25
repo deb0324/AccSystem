@@ -2,19 +2,99 @@
 
 <div>
   <%= form_for @customer do |f| %>
-    
-    <p>客戶名稱</p>
-    <p><%= f.text_field :name %></p>
+  <%= render 'shared/form_errors', object: @customer %>
+<table id="customer_new">
+  <tr>
+    <td>客戶代號:</td>
+    <td><%= f.text_field :code %></td>
+  </tr>
 
-    <p>承辦人</p>
-    <p><%= f.select :officer_id, options_for_select(@users) %></p>
+  <tr>
+    <td>客戶簡稱: </td>
+    <td><%= f.text_field :name_abrev %></td>
+  </tr>
 
-    <p>領組</p>
-    <p><%= f.select :leader_id, options_for_select(@users) %></p>
+  <tr>
+    <td>客戶全名: </td>
+    <td><%= f.text_field :name %></td>
+  </tr>
 
-    <p>經理</p>
-    <p><%= f.select :manager_id, options_for_select(@users) %></p>
-    
+  <tr>
+    <td>申報別: </td>
+    <td><%= f.select :declare_type, options_for_select(@declare_types) %></td>
+  </tr>
+
+  <tr>
+    <td>登記地址: </td>
+    <td><%= f.text_field :reg_addr %></td>
+  </tr>
+
+  <tr>
+    <td>聯絡地址: </td>
+    <td><%= f.text_field :contact_addr %></td>
+  </tr>
+
+  <tr>
+    <td>聯絡人: </td>
+    <td><%= f.text_field :contact %></td>
+  </tr>
+
+  <tr>
+    <td>手機: </td>
+    <td><%= f.text_field :cellphone %></td>
+  </tr>
+
+  <tr>
+    <td>電話: </td>
+    <td><%= f.text_field :phone %></td>
+  </tr>
+
+  <tr>
+    <td>傳真: </td>
+    <td><%= f.text_field :fax %></td>
+  </tr>
+
+  <tr>
+    <td>信箱: </td>
+    <td><%= f.text_field :email %></td>
+  </tr>
+
+  <tr>
+    <td>費用:</td>
+    <td><%= f.text_field :fee %></td>
+  </tr>
+
+  <tr>
+    <td>承辦人: </td>
+    <td><%= f.select :officer_id, options_for_select(@users) %></td>
+  </tr>
+
+  <tr>
+    <td>領組: </td>
+    <td><%= f.select :leader_id, options_for_select(@users) %></td>
+  </tr>
+
+  <tr>
+    <td>經理:</td>
+    <td><%= f.select :manager_id, options_for_select(@users) %></td>
+  </tr>
+
+  <tr>
+    <td>起始年約: </td>
+    <td><%= f.text_field :start_date, :class => 'datepicker' %></td>
+  </tr>
+
+  <tr>
+    <td>備註1: </td>
+    <td><%= f.text_area :note_1 %></td>
+  </tr>
+
+  <tr>
+    <td>備註2: </td>
+    <td><%= f.text_area :note_2 %></td>
+  </tr>
+  </table>
     <p><%= f.submit '新增' %></p>
+
   <% end %>
 </div>

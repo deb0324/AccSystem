@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   before_action :require_accountant, only:[:index, :new, :create, :edit, :update, :destroy]
   def index
-
+    @url = session[:testing]
   end
 
   def new
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:success] = "員工:#{@user.name} 新增成功"
-      redirect_to root_path
+      redirect_to users_path
     else
       render :new
     end
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
     if @user.update(user_params)
       flash[:success] = "員工:#{@user.name} 修改成功"
-      redirect_to root_path
+      redirect_to users_path
     else
       render :edit
     end
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     
-    redirect_to root_path
+    redirect_to users_path
   end
 
   private 
