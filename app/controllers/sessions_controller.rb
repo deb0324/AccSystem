@@ -52,7 +52,6 @@ class SessionsController < ApplicationController
         customers.each do |customer|
           @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
         end
-
         case type
         when "officer"
           @officer_tasks = @tasks
@@ -64,12 +63,13 @@ class SessionsController < ApplicationController
       end
     end
 
-    customers.each do |customer|
-      @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
-    end
+    
 
     #if (params[:flag])
       if current_user.accountant? || current_user.moved? || current_user.closed?
+        customers.each do |customer|
+          @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
+        end
         @tasks = @tasks.sort_by{|x| x.total_checks}
       else
         @officer_tasks = @officer_tasks.sort_by{|x| x.total_checks}
