@@ -4,8 +4,8 @@ class SessionsController < ApplicationController
   
 
   def new
-    @type_options = ['1~2月營業稅','3~4月營業稅','5~6月營業稅','7~8月營業稅','9~10月營業稅','11~12月營業稅','扣繳憑單申報', '結算申報']
-    @year_options = ['105', '106', '107', '108', '109', '110']
+    @type_options = get_task_types_chin()
+    @year_options = get_years()
     @names = name_array()
   end
 
@@ -63,20 +63,17 @@ class SessionsController < ApplicationController
       end
     end
 
-    
-
-    #if (params[:flag])
-      if current_user.accountant? || current_user.moved? || current_user.closed?
-        customers.each do |customer|
-          @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
-        end
-        @tasks = @tasks.sort_by{|x| x.total_checks}
-      else
-        @officer_tasks = @officer_tasks.sort_by{|x| x.total_checks}
-        @leader_tasks = @leader_tasks.sort_by{|x| x.total_checks}
-        @manager_tasks = @manager_tasks.sort_by{|x| x.total_checks}
+    if current_user.accountant? || current_user.moved? || current_user.closed?
+      customers.each do |customer|
+        @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
       end
-    #end
+      @tasks = @tasks.sort_by{|x| x.total_checks}
+    else
+      @officer_tasks = @officer_tasks.sort_by{|x| x.total_checks}
+      @leader_tasks = @leader_tasks.sort_by{|x| x.total_checks}
+      @manager_tasks = @manager_tasks.sort_by{|x| x.total_checks}
+    end
+  
 
   end
 
@@ -89,7 +86,7 @@ class SessionsController < ApplicationController
 
   private
 
-  # Get all the customers that the user is involved in
+  # Get all the customers that the user is involved in depending on user type
   def is_responsible(id, type)
     case type
     when "officer"
@@ -100,56 +97,6 @@ class SessionsController < ApplicationController
       Customer.where(manager_id: id, status: "current") - Customer.where(leader_id: id, status: "current") - Customer.where(officer_id: id, status: "current")
     else
 
-    end
-  end
-
-  # Convert task name from Chin to Eng
-  def task_c2e(task)
-
-    case task
-    when '1~2月營業稅'
-      'VatJan'
-    when '3~4月營業稅'
-      'VatMar'
-    when '5~6月營業稅'
-      'VatMay'
-    when '7~8月營業稅'
-      'VatJul'
-    when '9~10月營業稅'
-      'VatSep'
-    when '11~12月營業稅'
-      'VatNov'
-    when '扣繳憑單申報'
-      'Voucher'
-    when '結算申報'
-      'IncomeTax'
-    else
-      redirect_to '/'
-    end  
-  end
-
-  # Convert task name from Eng to Chin
-  def task_e2c(task)
-
-    case task
-    when 'VatJan'
-      '1~2月營業稅'
-    when 'VatMar'
-      '3~4月營業稅'
-    when 'VatMay'
-      '5~6月營業稅'
-    when 'VatJul'
-      '7~8月營業稅'
-    when 'VatSep'
-      '9~10月營業稅'
-    when 'VatNov'
-      '11~12月營業稅'
-    when 'Voucher'
-      '扣繳憑單申報'
-    when 'IncomeTax'
-      '結算申報'
-    else
-      '###'
     end
   end
 end

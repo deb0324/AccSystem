@@ -12,19 +12,13 @@ class TasksController < ApplicationController
     end
   end
 
-  def index
-
-  end
-
   def new
     @task = Task.new
-    @year_options = ['105', '106', '107', '108', '109', '110']
+    @year_options = get_years
   end
 
   def create
     year = params[:task][:year].to_i
-    task_types = ["VatJan", "VatMar", "VatMay", "VatJul", "VatSep", "VatNov", "Voucher", "IncomeTax"]
-    task_checks = ["Primary", "Secondary", "Recieved", "Upload"]
     @customers = Customer.all
 
     @customers.each do |customer|
@@ -56,9 +50,9 @@ class TasksController < ApplicationController
   private
 
   def add_tasks(customer, year)
-    task_types = ["VatJan", "VatMar", "VatMay", "VatJul", "VatSep", "VatNov", "Voucher", "IncomeTax"]
-    task_checks = ["Primary", "Secondary", "Recieved", "Upload"]
-
+    task_types = get_task_types_eng()
+    task_checks = get_check_types()
+    
     task_types.each do |type|
       
       task = Task.create(year: year, type: type)
