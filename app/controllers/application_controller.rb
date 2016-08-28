@@ -23,8 +23,9 @@ class ApplicationController < ActionController::Base
   end
 
   def name_array
-    names = User.all.pluck(:name)
-    codes = User.all.pluck(:code)
+    codes = User.all.order(:code).pluck(:code)
+    names = User.all.order(:code).pluck(:name)
+    
     length = names.length
     arr = []
     (0...length).each do |i|

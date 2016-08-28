@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
 
-  before_action :require_accountant, only:[:new, :create, :show, :edit, :update, :destroy]
+  before_action :require_accountant, only:[:new, :create, :edit, :update, :destroy]
 
   def index
     @customers = Customer.all
