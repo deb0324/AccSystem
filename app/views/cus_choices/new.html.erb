@@ -4,7 +4,7 @@
   <%= form_for(:choice, url: choose_customer_path) do |f| %>
 
     <label>姓名:</label>
-    <p><%= f.select :name_abrev, options_for_select(@customers) %></p>
+    <p><%= f.select :name, options_for_select(@customers) %></p>
 
     <%= f.submit '確定' %>
   <% end %>

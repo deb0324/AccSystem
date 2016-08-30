@@ -34,6 +34,17 @@ class ApplicationController < ActionController::Base
     arr
   end
 
+  def cus_array
+    codes = Customer.all.order(:code).pluck(:code)
+    names = Customer.all.order(:code).pluck(:name_abrev)
+    length = names.length
+    arr = []
+    (0...length).each do |i|
+      arr << "#{codes[i]} #{names[i]}"
+    end
+    arr
+  end
+
   def convert_name(user)
     name = "#{user.code} #{user.name}"
   end
