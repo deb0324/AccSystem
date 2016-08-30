@@ -2,7 +2,7 @@ class CusChoicesController < ApplicationController
 
   before_action :require_accountant, only:[:new, :create]
   def new
-    @customers = Customer.all.pluck(:name_abrev)
+    @customers = Customer.all.order(:code).pluck(:name_abrev)
   end
 
   def create

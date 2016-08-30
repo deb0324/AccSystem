@@ -36,18 +36,19 @@ class SessionsController < ApplicationController
 
     # If user is accountant, display all tasks, else display only involved tasks
     if current_user.accountant?
-      customers = Customer.where(status: "current")
+      customers = Customer.where(status: "current").order(:code)
     
     elsif current_user.moved?
-      customers = Customer.where(status: "moved")
+      customers = Customer.where(status: "moved").order(:code)
 
     elsif current_user.closed?
-      customers = Customer.where(status: "closed") 
+      customers = Customer.where(status: "closed").order(:code)
 
     else
       types = ["officer", "leader", "manager"]
       types.each do |type|
         customers = is_responsible(params[:id], type)
+
         @tasks = []
         customers.each do |customer|
           @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
@@ -67,11 +68,11 @@ class SessionsController < ApplicationController
       customers.each do |customer|
         @tasks.concat(customer.tasks.where(year: params[:year], type: params[:type]))
       end
-      @tasks = @tasks.sort_by{|x| x.total_checks}
-    else
-      @officer_tasks = @officer_tasks.sort_by{|x| x.total_checks}
-      @leader_tasks = @leader_tasks.sort_by{|x| x.total_checks}
-      @manager_tasks = @manager_tasks.sort_by{|x| x.total_checks}
+    #   @tasks = @tasks.sort_by{|x| x.total_checks}
+    # else
+    #   @officer_tasks = @officer_tasks.sort_by{|x| x.total_checks}
+    #   @leader_tasks = @leader_tasks.sort_by{|x| x.total_checks}
+    #   @manager_tasks = @manager_tasks.sort_by{|x| x.total_checks}
     end
   
 
@@ -90,11 +91,11 @@ class SessionsController < ApplicationController
   def is_responsible(id, type)
     case type
     when "officer"
-      Customer.where(officer_id: id, status: "current")
+      Customer.where(officer_id: id, status: "current").order(:code)
     when "leader"
-      Customer.where(leader_id: id, status: "current") - Customer.where(officer_id: id, status: "current")
+      Customer.where(leader_id: id, status: "current").order(:code) - Customer.where(officer_id: id, status: "current").order(:code)
     when "manager"
-      Customer.where(manager_id: id, status: "current") - Customer.where(leader_id: id, status: "current") - Customer.where(officer_id: id, status: "current")
+      Customer.where(manager_id: id, status: "current").order(:code) - Customer.where(leader_id: id, status: "current").order(:code) - Customer.where(officer_id: id, status: "current").order(:code)
     else
 
     end
